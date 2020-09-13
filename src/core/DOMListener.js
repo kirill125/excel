@@ -6,12 +6,10 @@ export default class DOMListener {
             throw new Error("No $root provided for DOMListener");
         }
         this.$root = $root;
-        console.log($root);
         this.listeners = listeners;
     }
 
     initDOMListeners() {
-        console.log(this.listeners);
         this.listeners.forEach(listener => {
             const eventMethod = getMethodName(listener);
             if (!this[eventMethod]) {
@@ -29,8 +27,8 @@ export default class DOMListener {
             }
             this.$root.off(listener, this[eventMethod]);
         });
-        this.listeners = [];
-        console.log(this.listeners);
+        // this.listeners = [];
+        // console.log(this.listeners);
     }
 }
 

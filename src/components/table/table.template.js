@@ -3,21 +3,28 @@ const CODES = {
     Z: 90
 };
 
-function toColumn(col) {
+function toColumn(col, index) {
     return `
-        <div class="column">${col}</div>
+        <div class="column" data-type="resizable" data-col=${index}>
+            ${col}
+            <div class="col-resize" data-resize="col"></div>
+        </div>
     `;
 }
 
-function toCell(cell) {
+function toCell(_, index) {
     return `
-        <div class="cell" contenteditable>${cell}</div>
+        <div class="cell" contenteditable data-col=${index}></div>
     `;
 }
 
 function createRow(content, index = "") {
-    return `<div class="row">
-        <div class="row-info">${index}</div>
+    const rowResize = index ? "<div class='row-resize' data-resize='row'></div>" : "";
+    return `<div class="row" data-type="resizable">
+        <div class="row-info">
+            ${index}
+            ${rowResize}
+        </div>
         <div class="row-data">
             ${content}
         </div>
@@ -51,6 +58,16 @@ export function createTable(rowsCount = 15) {
 
     return rows.join("");
 }
+
+// export function resizeCol(index, width) {
+//     const rows = document.querySelectorAll(".row-data");
+//     rows.forEach(row => {
+//         // const currentWidth = window.getComputedStyle(row.children[index]).getPropertyValue("width").replace(/\D/g, "");
+//         // console.log(currentWidth);
+//         // row.children[index].style.width = +currentWidth + (+width)+"px";
+//         row.children[index].style.width = width;
+//     });
+// }
 
 
 // export function createTable(rowsCount = 15) {
