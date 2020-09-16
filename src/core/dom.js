@@ -23,6 +23,16 @@ class Dom {
             return this.$el.outerHTML;
         }
     }
+
+    set text(text) {
+        if (typeof text === "string") {
+            this.$el.textContent = text;
+        }
+    }
+
+    get text() {
+        return this.$el.textContent;
+    }
     clear() {
         this.html("");
         return this;
@@ -47,6 +57,10 @@ class Dom {
         return this.$el.getBoundingClientRect();
     }
 
+    find(selector) {
+        return $(this.$el.querySelector(selector));
+    }
+
     findAll(selector) {
         return this.$el.querySelectorAll(selector);
     }
@@ -59,6 +73,22 @@ class Dom {
         }
     }
 
+    id(parse) {
+        if (parse) {
+            const parsed = this.id().split(parse);
+            return {
+                row: +parsed[0],
+                col: +parsed[1]
+            };
+        }
+        return this.data.id;
+    }
+
+    focus() {
+        this.$el.focus();
+        return this;
+    }
+
     on(eventType, cb) {
         if (eventType && cb) {
             this.$el.addEventListener(eventType, cb);
@@ -69,6 +99,16 @@ class Dom {
         if (eventType && cb) {
             this.$el.removeEventListener(eventType, cb);
         }
+    }
+
+    addClass(className) {
+        this.$el.classList.add(className);
+        return this;
+    }
+
+    removeClass(className) {
+        this.$el.classList.remove(className);
+        return this;
     }
 }
 
