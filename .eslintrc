@@ -14,7 +14,7 @@
         "arrow-parens": "off",
         "comma-dangle": "off",
         "object-curly-spacing": ["warn", "always"],
-        "indent": ["warn", 4],
+        "indent": ["warn", 4, { "SwitchCase": 1 }],
         "no-debugger":"off",
         "max-len": "off",
         "no-unused-vars" :"warn"

@@ -12,10 +12,18 @@ function toColumn(col, index) {
     `;
 }
 
-function toCell(_, index) {
-    return `
-        <div class="cell" contenteditable data-col=${index}></div>
-    `;
+// function toCell(_, index) {
+//     return `
+//         <div class="cell" contenteditable data-col=${index}></div>
+//     `;
+// }
+
+function toCell(row) {
+    return function(_, index) {
+        return `
+            <div class="cell" contenteditable data-col="${index}" data-id="${row}:${index}" data-type="cell"></div>
+        `;
+    };
 }
 
 function createRow(content, index = "") {
@@ -51,7 +59,9 @@ export function createTable(rowsCount = 15) {
         const cells = new Array(colsCount)
             .fill("")
             // .map((el, index) => toChar(el, index) + (i+1))
-            .map(toCell)
+            // .map(toCell)
+            // .map((_, col) => toCell(i, col))
+            .map(toCell(i))
             .join("");
         rows.push(createRow(cells, i+1));
     }
