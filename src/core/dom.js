@@ -1,3 +1,5 @@
+import { defaultStyles } from "@/constants";
+
 class Dom {
     constructor(selector) {
         // if (!selector) {
@@ -25,7 +27,7 @@ class Dom {
     }
 
     set text(text) {
-        if (typeof text === "string") {
+        if (text !== undefined) {
             this.$el.textContent = text;
         }
     }
@@ -73,6 +75,13 @@ class Dom {
         }
     }
 
+    getStyles(styles = []) {
+        return styles.reduce((res, style) => {
+            res[style] = this.$el.style[style] || defaultStyles[style];
+            return res;
+        }, {});
+    }
+
     id(parse) {
         if (parse) {
             const parsed = this.id().split(parse);
@@ -109,6 +118,20 @@ class Dom {
     removeClass(className) {
         this.$el.classList.remove(className);
         return this;
+    }
+
+    toggleClass(className) {
+        this.$el.classList.toggle(className);
+        return this;
+    }
+
+    attr(name, value) {
+        if (value) {
+            this.$el.setAttribute(name, value);
+            return this;
+        } else {
+            return this.$el.getAttribute(name);
+        }
     }
 }
 
